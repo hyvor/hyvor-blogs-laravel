@@ -1,0 +1,33 @@
+{
+    "name": "hyvor/hyvor-blogs-laravel",
+    "description": "Laravel Package for Hyvor Blogs self-hosting",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+        "name": "Supun Kavinda",
+        "email": "supun@hyvor.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Hyvor\\HyvorBlogs\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+          "Hyvor\\HyvorBlogs\\Tests\\": "tests"
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Hyvor\\HyvorBlogs\\HyvorBlogsServiceProvider"
+            ]
+        }
+    }
+}
