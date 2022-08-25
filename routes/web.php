@@ -1,6 +1,7 @@
 <?php
 
 use Hyvor\HyvorBlogs\Http\Controllers\BlogController;
+use Hyvor\HyvorBlogs\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 $blogs = config('hyvorblogs.blogs');
 
 foreach ($blogs as $blog) {
-    $route = $blog['route'] . '/{path?}';
+    $route = $blog['route'].'/{path?}';
     $subdomain = $blog['subdomain'];
 
     /**
@@ -34,5 +35,7 @@ foreach ($blogs as $blog) {
          * Make sure path matches anything
          */
         ->where('path', '.*');
-
 }
+
+// webhook route
+Route::post('/hyvorblogs/webhook', [WebhookController::class, 'handle']);

@@ -1,11 +1,25 @@
 <?php
+
 namespace Hyvor\HyvorBlogs;
 
-class Helper {
+use Hyvor\HyvorBlogs\Exception\UnknownSubdomainException;
 
-    public static function getConfigBySubdomain(string $subdomain) : array 
+class Helper
+{
+    /**
+     * @return array{
+     *     subdomain: string,
+     *     delivery_api_key: string,
+     *     webhook_secret: ?string,
+     *     route: string,
+     *     cache_store: ?string,
+     *     middleware: array
+     * }
+     *
+     * @throws UnknownSubdomainException
+     */
+    public static function getConfigBySubdomain(string $subdomain): array
     {
-
         $config = config('hyvorblogs.blogs');
 
         foreach ($config as $blog) {
@@ -14,8 +28,6 @@ class Helper {
             }
         }
 
-        // TODO: Add exception
-
+        throw new UnknownSubdomainException;
     }
-
 }

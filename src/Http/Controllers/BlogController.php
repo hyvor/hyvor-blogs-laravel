@@ -1,4 +1,5 @@
 <?php
+
 namespace Hyvor\HyvorBlogs\Http\Controllers;
 
 use Hyvor\HyvorBlogs\Response;
@@ -6,9 +7,9 @@ use Hyvor\HyvorBlogs\ResponseGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class BlogController extends Controller {
-
-    public function handle(Request $request) 
+class BlogController extends Controller
+{
+    public function handle(Request $request)
     {
 
         /**
@@ -22,20 +23,17 @@ class BlogController extends Controller {
          */
         $path = $request->route('path');
 
-
         /**
          * If path is null, it means the index page
          * Add leading slash if else
          */
-        $path = $path === null ? '/' : '/' . $path;
-        
+        $path = $path === null ? '/' : '/'.$path;
+
         /**
-         * 
+         * Generate laravel response
          */
         $response = new ResponseGenerator($subdomain, $path);
 
         return $response->getResponse();
-
     }
-
 }
