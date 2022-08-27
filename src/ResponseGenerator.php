@@ -2,6 +2,8 @@
 
 namespace Hyvor\HyvorBlogs;
 
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
 
 class ResponseGenerator
@@ -16,7 +18,7 @@ class ResponseGenerator
         $this->path = $path;
     }
 
-    public function getResponse()
+    public function getResponse() : Response|RedirectResponse
     {
 
         /**
@@ -43,7 +45,7 @@ class ResponseGenerator
         return $this->convertResponseObjectToLaravelResponse($responseObject);
     }
 
-    private function callDeliveryApi()
+    private function callDeliveryApi() : DeliveryAPIResponseObject
     {
         $baseUrl = config('hyvorblogs.hb_base_url');
         $response = Http::get("$baseUrl/api/delivery/v0/$this->subdomain", [
@@ -52,14 +54,16 @@ class ResponseGenerator
 
         $response->throw();
 
-        return (object) $response->json();
+        return DeliveryAPIResponseObject::create($response->json());
     }
 
     /**
      * Converts [Hyvor Blogs Delivery API Response Object](https://blogs.hyvor.com/docs/api-delivery#response-object)
      * To a Laravel response
      */
-    private function convertResponseObjectToLaravelResponse(object $responseObject)
+    private function convertResponseObjectToLaravelResponse(
+        DeliveryAPIResponseObject $responseObject
+    ) : Response|RedirectResponse
     {
         if ($responseObject->type === 'file') {
 
@@ -67,9 +71,9 @@ class ResponseGenerator
             return response(
                 base64_decode($responseObject->content),
                 $responseObject->status
-            )
-                ->header('Content-Type', $responseObject->mime_type);
-        } elseif ($responseObject->type === 'redirect') {
+            )->header('Content-Type', $responseObject->mime_type);
+
+        } else {
 
             // return a redirect response
             return redirect($responseObject->to, $responseObject->status);

@@ -2,7 +2,6 @@
 
 namespace Hyvor\HyvorBlogs\Http\Controllers;
 
-use Hyvor\HyvorBlogs\Response;
 use Hyvor\HyvorBlogs\ResponseGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;

@@ -31,7 +31,7 @@ class CacheService
         return $this->cacheStore->get($key);
     }
 
-    public function set(string $path, object $response)
+    public function set(string $path, DeliveryAPIResponseObject $response)
     {
         $this->cacheStore->put($this->getKey($path), json_encode($response));
     }
@@ -47,13 +47,6 @@ class CacheService
         $response = DeliveryAPIResponseObject::createFromJson($cached);
 
         if (! $response) {
-            return null;
-        }
-
-        if (
-            ! isset($response->type) ||
-            ! isset($response->at)
-        ) {
             return null;
         }
 
@@ -78,17 +71,17 @@ class CacheService
         return $response;
     }
 
-    public function clearSingleCache(string $path)
+    public function clearSingleCache(string $path) : void
     {
         $this->cacheStore->forget($this->getKey($path));
     }
 
-    public function clearTemplateCache()
+    public function clearTemplateCache() : void
     {
         $this->cacheStore->put($this->getKey(self::LAST_TEMPLATE_CACHE_CLEARED_AT), now()->timestamp);
     }
 
-    public function clearAllCache()
+    public function clearAllCache() : void
     {
         $this->cacheStore->put($this->getKey(self::LAST_ALL_CACHE_CLEARED_AT), now()->timestamp);
     }

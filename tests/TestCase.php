@@ -12,4 +12,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
             HyvorBlogsServiceProvider::class,
         ];
     }
+
+    protected function defineEnvironment($app)
+    {
+        $app['config']->set('hyvorblogs.blogs', defaultConfig());
+    }
 }

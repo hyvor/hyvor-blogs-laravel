@@ -1,12 +1,12 @@
 {
     "name": "hyvor/hyvor-blogs-laravel",
-    "description": "Laravel Package for Hyvor Blogs self-hosting",
+    "description": "For self-hosting Hyvor Blogs blog on a Laravel application",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-        "name": "Supun Kavinda",
-        "email": "supun@hyvor.com"
+            "name": "Supun",
+            "email": "supun@hyvor.com"
         }
     ],
     "autoload": {
@@ -23,7 +23,9 @@
         "orchestra/testbench": "^7.0",
         "phpunit/phpunit": "^9.5",
         "phpstan/phpstan": "^1.8",
-        "laravel/pint": "^1.1"
+        "laravel/pint": "^1.1",
+        "pestphp/pest": "^1.21",
+        "nunomaduro/larastan": "^2.1"
     },
     "extra": {
         "laravel": {
@@ -31,5 +33,18 @@
                 "Hyvor\\HyvorBlogs\\HyvorBlogsServiceProvider"
             ]
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php ./vendor/bin/testbench package:discover --ansi"
+        ]
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.4"
     }
 }

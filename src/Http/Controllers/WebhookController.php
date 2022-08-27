@@ -6,19 +6,27 @@ use Hyvor\HyvorBlogs\CacheService;
 use Hyvor\HyvorBlogs\Exception\UnknownSubdomainException;
 use Hyvor\HyvorBlogs\Exception\WebhookValidationException;
 use Hyvor\HyvorBlogs\Helper;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
+
 
 class WebhookController
 {
     /**
      * Returns a 200 response on known errors to prevent webhook re-trying
      */
-    public function handle(Request $request): JsonResponse
+    public function handle(Request $request)
     {
+        $msg = 'OK';
+
         try {
+
             $subdomain = $request->post('subdomain');
+
+            if (!is_string($subdomain)) {
+                throw new UnprocessableEntityHttpException('Invalid subdomain');
+            }
+
             $blogConfig = Helper::getConfigBySubdomain($subdomain);
 
             $webhookSecret = $blogConfig['webhook_secret'];
@@ -30,26 +38,28 @@ class WebhookController
             $event = $request->post('event');
 
             match ($event) {
-                'cache.single' => $cacheService->clearSingleCache($request->post('data.path')),
+                'cache.single' => $cacheService->clearSingleCache($request->input('data.path')),
                 'cache.templates' => $cacheService->clearTemplateCache(),
                 'cache.all' => $cacheService->clearAllCache(),
                 default => null
             };
         } catch (UnknownSubdomainException) {
-            Log::alert("Webhook for invalid subdomain: $subdomain");
+            $msg = "Webhook for invalid subdomain: $subdomain";
         } catch (WebhookValidationException) {
-            Log::alert('Unable to validate webhook');
+            $msg = 'Unable to validate webhook';
         }
 
-        return $this->okResponse();
+        return response($msg);
     }
 
-    private function okResponse(): JsonResponse
+    private function validateWebhook(Request $request, string $webhookSecret) : void
     {
-        return response()->json();
-    }
 
-    private function validateWebhook(Request $request, string $webhookSecret)
-    {
+        $content = (string) $request->getContent();
+        $knownHash = hash_hmac('sha256', $content, $webhookSecret);
+
+        $signature = $request->header('X-Signature');
+        if (!hash_equals($knownHash, $signature))
+            throw new WebhookValidationException;
     }
 }

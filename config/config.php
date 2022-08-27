@@ -55,9 +55,9 @@ return [
              */
             'middleware' => [],
         ],
-    /**
-     * You can add more blogs here ;)
-     */
+        /**
+         * You can add more blogs here ;)
+         */
     ],
 
     /**
