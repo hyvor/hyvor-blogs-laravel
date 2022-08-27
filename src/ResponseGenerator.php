@@ -47,6 +47,9 @@ class ResponseGenerator
 
     private function callDeliveryApi() : DeliveryAPIResponseObject
     {
+        /**
+         * @var string $baseUrl
+         */
         $baseUrl = config('hyvorblogs.hb_base_url');
         $response = Http::get("$baseUrl/api/delivery/v0/$this->subdomain", [
             'path' => $this->path,

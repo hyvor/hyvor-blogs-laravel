@@ -28,6 +28,9 @@ class DeliveryAPIResponseObject
 
     public int $status;
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public static function create(array $data): DeliveryAPIResponseObject
     {
         $obj = new self();
@@ -50,7 +53,7 @@ class DeliveryAPIResponseObject
     public static function createFromJson(string $json): ?DeliveryAPIResponseObject
     {
         $json = json_decode($json, true);
-        if (! $json) {
+        if (!is_array($json)) {
             return null;
         }
 

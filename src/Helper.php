@@ -13,9 +13,8 @@ class Helper
      *     webhook_secret: ?string,
      *     route: string,
      *     cache_store: ?string,
-     *     middleware: array
+     *     middleware: array<mixed>
      * }
-     *
      * @throws UnknownSubdomainException
      */
     public static function getConfigBySubdomain(string $subdomain): array
@@ -23,7 +22,7 @@ class Helper
         $config = config('hyvorblogs.blogs');
 
         foreach ($config as $blog) {
-            if ($blog['subdomain'] === $subdomain) {
+            if (isset($blog['subdomain']) && $blog['subdomain'] === $subdomain) {
                 return $blog;
             }
         }

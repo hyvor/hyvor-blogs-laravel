@@ -13,7 +13,7 @@ class HyvorBlogsServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'hyvorblogs');
     }
 
-    public function boot()
+    public function boot() : void
     {
 
         /**
@@ -32,6 +32,7 @@ class HyvorBlogsServiceProvider extends ServiceProvider
 
         /**
          * Middleware
+         * @var Router $router
          */
         $router = $this->app->make(Router::class);
         $router->aliasMiddleware('hyvor_blogs_middleware', BlogMiddleware::class);

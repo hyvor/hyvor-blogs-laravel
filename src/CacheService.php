@@ -27,11 +27,10 @@ class CacheService
     private function getFromCache(string $key): ?string
     {
         $key = $this->getKey($key);
-
         return $this->cacheStore->get($key);
     }
 
-    public function set(string $path, DeliveryAPIResponseObject $response)
+    public function set(string $path, DeliveryAPIResponseObject $response) : void
     {
         $this->cacheStore->put($this->getKey($path), json_encode($response));
     }

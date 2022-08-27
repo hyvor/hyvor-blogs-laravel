@@ -4,6 +4,7 @@ namespace Hyvor\HyvorBlogs\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This middleware does nothing more than passing
@@ -11,7 +12,7 @@ use Illuminate\Http\Request;
  */
 class BlogMiddleware
 {
-    public function handle(Request $request, Closure $next, string $subdomain)
+    public function handle(Request $request, Closure $next, string $subdomain) : Response
     {
 
         /**
