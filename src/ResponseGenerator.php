@@ -53,6 +53,7 @@ class ResponseGenerator
         $baseUrl = config('hyvorblogs.hb_base_url');
         $response = Http::get("$baseUrl/api/delivery/v0/$this->subdomain", [
             'path' => $this->path,
+            'api_key' => Helper::getConfigBySubdomain($this->subdomain)['delivery_api_key']
         ]);
 
         $response->throw();

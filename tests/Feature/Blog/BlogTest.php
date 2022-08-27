@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Http;
 
 it('renders blog from API data', function() {
 
+    updateConfig(['delivery_api_key' => 'test-key']);
+
     Http::fake([
         'https://blogs.hyvor.com/api/delivery/v0/test*' => Http::response([
             'type' => 'file',
@@ -25,6 +27,10 @@ it('renders blog from API data', function() {
         ->assertSee('Test Index Page')
         ->assertHeader('Content-Type', 'text/test; charset=UTF-8')
         ->assertStatus(201);
+
+    Http::assertSent(function (Request $request) {
+        return $request['api_key'] === 'test-key';
+    });
 
 });
 
