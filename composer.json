@@ -1,6 +1,7 @@
 {
     "name": "hyvor/hyvor-blogs-laravel",
-    "description": "For self-hosting Hyvor Blogs blog on a Laravel application",
+    "version": "0.0.1",
+    "description": "For self-hosting a Hyvor Blogs blog on a Laravel application",
     "type": "library",
     "license": "MIT",
     "authors": [
