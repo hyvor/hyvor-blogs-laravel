@@ -25,7 +25,6 @@ class ResponseGenerator
          * First, check cache
          */
         $cacheService = new CacheService($this->subdomain);
-        $cacheService->clearAllCache();
         $cachedResponseObject = $cacheService->get($this->path);
 
         if ($cachedResponseObject) {
