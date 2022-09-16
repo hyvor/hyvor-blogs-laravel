@@ -13,7 +13,7 @@ class CacheService
 
     private Repository $cacheStore;
 
-    public function __construct(private readonly string $subdomain)
+    public function __construct(private string $subdomain)
     {
         $config = Helper::getConfigBySubdomain($this->subdomain);
         $this->cacheStore = Cache::store($config['cache_store']);
