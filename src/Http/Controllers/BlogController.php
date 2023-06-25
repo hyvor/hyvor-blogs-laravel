@@ -30,7 +30,7 @@ class BlogController extends Controller
          * If path is null, it means the index page
          * Add leading slash if else
          */
-        $path = $path === null ? '/' : '/'.$path;
+        $path = is_string($path) ? '/' . $path : '/';
 
         /**
          * Generate laravel response

@@ -20,6 +20,8 @@ class DeliveryAPIResponseObject
 
     public string $mime_type;
 
+    public string $cache_control;
+
     // for redirect
     public string $to;
 
@@ -43,6 +45,7 @@ class DeliveryAPIResponseObject
             $obj->file_type = $data['file_type'];
             $obj->content = $data['content'];
             $obj->mime_type = $data['mime_type'];
+            $obj->cache_control = $data['cache_control'] ?? 'no-cache, private';
         } else {
             $obj->to = $data['to'];
         }

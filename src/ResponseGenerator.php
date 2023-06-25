@@ -74,7 +74,9 @@ class ResponseGenerator
             return response(
                 base64_decode($responseObject->content),
                 $responseObject->status
-            )->header('Content-Type', $responseObject->mime_type);
+            )
+                ->header('Content-Type', $responseObject->mime_type)
+                ->header('Cache-Control', $responseObject->cache_control);
 
         } else {
 
