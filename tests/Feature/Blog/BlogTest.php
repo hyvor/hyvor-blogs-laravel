@@ -19,13 +19,15 @@ it('renders blog from API data', function() {
             'status' => 201,
             'file_type' => 'template',
             'content' => base64_encode('Test Index Page'),
-            'mime_type' => 'text/test'
+            'mime_type' => 'text/test',
+            'cache_control' => 'max-age=3600, public',
         ])
     ]);
 
     test()->call('GET', '/blog')
         ->assertSee('Test Index Page')
         ->assertHeader('Content-Type', 'text/test; charset=UTF-8')
+        ->assertHeader('Cache-Control', 'max-age=3600, public')
         ->assertStatus(201);
 
     Http::assertSent(function (Request $request) {
@@ -86,6 +88,14 @@ it('works from cache', function() {
     test()->call('GET', '/blog/page')
         ->assertSee('new test message')
         ->assertHeader('Content-Type', 'text/html; charset=UTF-8')
+
+        /**
+         * If a user upgrades from an older version,
+         * the cache-control is missing in response object
+         * just make sure it can fallback to a default
+         */
+        ->assertHeader('Cache-Control', 'no-cache, private')
+
         ->assertStatus(200);
 
 });
