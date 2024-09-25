@@ -28,7 +28,7 @@ jobs:
             php-version: "${{ matrix.php }}"
             ini-file: development
             tools: composer:v2
-            extensions: pcntl
+            extensions: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml, intl
 
       -   name: Install dependencies
           run: composer update --ansi --no-progress
