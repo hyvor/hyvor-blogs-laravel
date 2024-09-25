@@ -24,10 +24,7 @@ jobs:
       -   name: Setup PHP
           uses: shivammathur/setup-php@v2
           with:
-            coverage: "none"
             php-version: "${{ matrix.php }}"
-            ini-file: development
-            tools: composer:v2
             extensions: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml, intl, pcntl
 
       -   name: Install dependencies
