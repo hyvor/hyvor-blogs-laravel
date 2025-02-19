@@ -3,7 +3,7 @@
 return [
 
     /**
-     * Tutorial: <https://blogs.hyvor.com/blog/laravel>
+     * Tutorial: <https://hyvor.com/blog/laravel-blog>
      *
      * Set up one or more blogs within your application
      */
@@ -16,6 +16,14 @@ return [
              * Sign up at https://blogs.hyvor.com/console to create a new one
              */
             'subdomain' => '',
+
+            /**
+             * @required
+             *
+             * Where should we host the blog?
+             * If the value is /blog, all /blog/* routes will be reserved for the blog
+             */
+            'route' => '/blog',
 
             /**
              * @required
@@ -36,14 +44,6 @@ return [
             'webhook_secret' => null,
 
             /**
-             * @required
-             *
-             * Where should we host the blog?
-             * If the value is /blog, all /blog/* routes will be reserved for the blog
-             */
-            'route' => '/blog',
-
-            /**
              * What Laravel cache store should we use for caching?
              * null = use default
              * Or, you can set it to any cache store name defined in your config/cache.php file.
@@ -59,6 +59,12 @@ return [
          * You can add more blogs here ;)
          */
     ],
+
+    /**
+     * Optional
+     * If you want to use a custom route for the webhook, set it here
+     */
+    'webhook_route' => '/hyvorblogs/webhook',
 
     /**
      * Hyvor Blog's Base URL to call the delivery API
