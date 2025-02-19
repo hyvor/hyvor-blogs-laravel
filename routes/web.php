@@ -37,5 +37,7 @@ foreach ($blogs as $blog) {
         ->where('path', '.*');
 }
 
+$webhookRoute = config('hyvorblogs.webhook_route');
+
 // webhook route
-Route::post('/hyvorblogs/webhook', [WebhookController::class, 'handle']);
+Route::post($webhookRoute, [WebhookController::class, 'handle']);
